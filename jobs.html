@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Openings in India & Global | Shivtej Placement Services – Staffing & Recruitment</title>
+  <meta name="description" content="Discover genuine, active job openings across India with verified client partners. Apply for manufacturing, engineering, software, sales, and HR roles with Shivtej Placement Services.">
+  <meta name="keywords" content="job openings, careers, Pune jobs, PCMC jobs, engineering jobs, manufacturing jobs, recruitment, staffing">
+  <meta name="author" content="Shivtej Group">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Global 3D Spatial Canvas Layer -->
+  <div id="global3DCanvas"></div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <div class="top-bar-item">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+          <span>Bhosari & PCMC, Maharashtra</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button id="openJobAdminBtn" class="top-bar-item" style="color: var(--color-primary); cursor: pointer; font-weight: 700;">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+          <span>Recruiter Portal / Post a Job</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="brand-logo" title="Shivtej Group">
+          <img src="assets/images/logo.png" alt="Shivtej Group Logo" width="215" height="56">
+        </a>
+
+        <div class="nav-menu" id="navMenu">
+          <a href="index.html" class="nav-link">Group Home</a>
+          <a href="hr-placement.html" class="nav-link">HR Services</a>
+          <a href="jobs.html" class="nav-link active">Job Openings</a>
+          <a href="foam-industries.html" class="nav-link">Foam Industries</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+
+        <div class="nav-actions">
+          <a href="#talentPoolSection" class="btn btn-primary btn-sm">Submit Resume</a>
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Jobs Banner -->
+    <div class="page-hero" style="background: radial-gradient(circle at 50% 30%, #1e3a8a 0%, #070b14 85%);">
+      <div class="container">
+        <h1>Latest Job Openings Across India</h1>
+        <p>Discover genuine, verified career opportunities with top manufacturing, IT, engineering, and corporate partners.</p>
+      </div>
+    </div>
+
+    <!-- JOB SEARCH & FILTER SECTION -->
+    <section class="section-padding bg-white" style="padding-top: 3.5rem;">
+      <div class="container">
+        
+        <!-- Live Filter Bar -->
+        <div class="jobs-filter-panel">
+          <div class="filter-grid-row">
+            
+            <div class="search-input-wrap">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+              <input type="text" id="jobSearchInput" placeholder="Search by job title, skill, or keyword...">
+            </div>
+
+            <div>
+              <select id="filterLocation" class="filter-select">
+                <option value="">All Locations</option>
+                <option value="Pune">Pune / PCMC</option>
+                <option value="Chikhli">Chikhli, Pune</option>
+                <option value="Bhosari">Bhosari, Pune</option>
+                <option value="Wakad">Wakad, Pune</option>
+                <option value="Nashik">Nashik</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Remote">Work from Home</option>
+              </select>
+            </div>
+
+            <div>
+              <select id="filterDepartment" class="filter-select">
+                <option value="">All Departments</option>
+                <option value="Manufacturing Operations">Manufacturing Operations</option>
+                <option value="Quality Engineering">Quality Engineering</option>
+                <option value="Sales & Marketing">Sales & Marketing</option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Facility Management">Facility Management</option>
+                <option value="Tooling & Fabrication">Tooling & Fabrication</option>
+              </select>
+            </div>
+
+            <div>
+              <select id="filterType" class="filter-select">
+                <option value="">All Job Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Temporary">Temporary</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Header Count Bar -->
+        <div class="jobs-header-bar">
+          <h2 style="font-size: 1.6rem; font-weight: 800;">Available Career Opportunities</h2>
+          <span class="job-count-badge" id="jobCountBadge">Loading Openings...</span>
+        </div>
+
+        <!-- DYNAMIC JOB LIST CONTAINER (Handled by js/jobs-app.js) -->
+        <div class="jobs-list-grid" id="jobListingsingsContainer">
+          <!-- Dynamically populated -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DIDN'T FIND THE RIGHT ROLE? (TALENT POOL FORM) -->
+    <section class="section-padding bg-alt" id="talentPoolSection">
+      <div class="container">
+        
+        <div class="contact-page-grid">
+          <div>
+            <span class="group-hero-tag" style="background: rgba(37, 99, 235, 0.15); color: var(--color-hr-brand); border-color: rgba(37, 99, 235, 0.3);">Candidate Talent Pool</span>
+            <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem;">Didn't find the right role today?</h2>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Share your profile with Shivtej Placement Services. When a matching opening is requested by our corporate clients, our recruitment managers will reach out to you directly.
+            </p>
+
+            <div class="vision-card" style="padding: 1.5rem; margin-top: 1.5rem;">
+              <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #10b981;">✓ Zero Fees to Candidates</h4>
+              <p style="font-size: 0.9rem; color: var(--color-text-muted);">We never charge candidates any registration fees or placement commissions. Our services to job seekers are 100% free and ethical.</p>
+            </div>
+          </div>
+
+          <!-- Talent Pool Resume Drop Form -->
+          <div class="contact-card-box">
+            <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">Submit Your Profile</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Your data is secure and used strictly for job recruitment matching.</p>
+
+            <form id="talentPoolForm" novalidate>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="candidate_name">Full Name *</label>
+                  <input type="text" id="candidate_name" name="candidate_name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                  <label for="candidate_phone">Phone / WhatsApp *</label>
+                  <input type="tel" id="candidate_phone" name="candidate_phone" required placeholder="+91...">
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="candidate_email">Email Address *</label>
+                  <input type="email" id="candidate_email" name="candidate_email" required placeholder="email@gmail.com">
+                </div>
+                <div class="form-group">
+                  <label for="candidate_role">Desired Functional Area *</label>
+                  <input type="text" id="candidate_role" name="candidate_role" required placeholder="e.g. Mechanical Engineer, Production, Sales, HR, Accounts">
+                </div>
+              </div>
+
+              <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                Choose how to send your resume. Your details are pre-filled automatically — just attach your CV file in the email, or share it in the WhatsApp chat that opens.
+              </p>
+
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-hr btn-lg send-resume-btn" data-channel="email" style="flex: 1; min-width: 160px;">
+                  Send Resume via Email
+                </button>
+                <button type="button" class="btn btn-lg send-resume-btn" data-channel="whatsapp" style="flex: 1; min-width: 160px; background: var(--color-whatsapp); color: #fff;">
+                  Send via WhatsApp
+                </button>
+              </div>
+              <div class="form-status" id="talentPoolStatus" style="margin-top: 1rem;"></div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ----------------------------------------------------------------------
+       JOB DETAILS MODAL (Candidate Application)
+  ---------------------------------------------------------------------- -->
+  <div class="custom-modal-backdrop" id="jobDetailModal">
+    <div class="custom-modal-dialog">
+      <button class="modal-close-btn" id="closeJobDetailBtn">&times;</button>
+      <div id="jobDetailModalBody">
+        <!-- Populated via js/jobs-app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------------------------------------------------------
+       FRONTEND IN-BROWSER JOB MANAGER (CMS MODAL FOR RECRUITERS)
+  ---------------------------------------------------------------------- -->
+  <div class="custom-modal-backdrop" id="jobAdminModal">
+    <div class="custom-modal-dialog">
+      <button class="modal-close-btn" id="closeJobAdminBtn">&times;</button>
+      
+      <!-- Section A: Passcode Authentication -->
+      <div id="adminAuthSection" style="text-align: center; padding: 2rem 1rem;">
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem;">Recruiter Portal Authentication</h2>
+        <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">Enter recruiter PIN to add or manage job postings directly from this frontend app.</p>
+
+        <div style="max-width: 320px; margin: 0 auto;">
+          <input type="password" id="adminPinInput" placeholder="Enter PIN (e.g. shivtej or 1234)" style="width: 100%; padding: 0.85rem; border: 1.5px solid var(--color-border); border-radius: var(--radius-md); text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+          <button class="btn btn-primary" id="adminPinSubmit" style="width: 100%;">Unlock Job Manager</button>
+          <p id="adminPinError" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; display: none;"></p>
+        </div>
+      </div>
+
+      <!-- Section B: Admin Management Panel -->
+      <div id="adminPanelSection" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h2 style="font-size: 1.6rem; font-weight: 800;">Frontend Job Openings Manager</h2>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-outline btn-sm" id="exportJobsJsonBtn">Export Database (JSON)</button>
+            <button class="btn btn-outline btn-sm" id="resetDefaultJobsBtn" style="color: #ef4444; border-color: #fecaca;">Reset Defaults</button>
+          </div>
+        </div>
+
+        <!-- Add New Job Form -->
+        <div class="job-application-box" style="margin-top: 0; margin-bottom: 2rem;">
+          <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">➕ Post a New Job Opening</h4>
+          
+          <form id="addNewJobForm">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Job Title *</label>
+                <input type="text" name="job_title" required placeholder="e.g. CNC Machine Operator">
+              </div>
+              <div class="form-group">
+                <label>Department / Function *</label>
+                <input type="text" name="job_department" required placeholder="e.g. Manufacturing Operations, Sales, Quality, IT">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Location *</label>
+                <input type="text" name="job_location" required placeholder="e.g. Chikhli, Pune / Bhosari">
+              </div>
+              <div class="form-group">
+                <label>Job Type *</label>
+                <select name="job_type">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Temporary">Temporary</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Experience Required *</label>
+                <input type="text" name="job_exp" required placeholder="e.g. Mid Level (2-4 yrs)">
+              </div>
+              <div class="form-group">
+                <label>Salary / CTC Range</label>
+                <input type="text" name="job_salary" placeholder="e.g. ₹25,000 - ₹35,000 / month">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Short Role Description *</label>
+              <textarea name="job_desc" rows="2" required placeholder="Brief overview of the role..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Key Responsibilities (One per line)</label>
+              <textarea name="job_resp" rows="3" placeholder="Lead daily machine setup&#10;Coordinate with QA inspection&#10;Track daily scrap logs"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Requirements (One per line)</label>
+              <textarea name="job_req" rows="3" placeholder="Diploma in Mechanical&#10;2+ years relevant experience&#10;Shift availability"></textarea>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+              <input type="checkbox" name="job_urgent" id="jobUrgentCheck" style="width: auto;">
+              <label for="jobUrgentCheck" style="margin-bottom: 0;">Mark as "Urgent Requirement"</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Post Job Opening to Live Site
+            </button>
+          </form>
+        </div>
+
+        <!-- Manage Existing Jobs List -->
+        <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Active Job Listings</h4>
+        <div id="adminJobList" style="border: 1px solid var(--color-border); border-radius: var(--radius-md);"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING ACTIONS -->
+  <div class="floating-actions">
+    <button class="back-to-top-btn" id="backToTopBtn" title="Back to top" aria-label="Scroll back to top">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+    </button>
+    <a href="https://wa.me/918805521152" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="WhatsApp" aria-label="WhatsApp">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <h5>Shivtej Placement Services</h5>
+          <p>Verified job openings across Pune, Maharashtra and Pan-India. Zero fees to job seekers.</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Portals</h5>
+          <div class="footer-contact-item"><a href="jobs.html">→ Job Openings</a></div>
+          <div class="footer-contact-item"><a href="hr-placement.html">→ Employer Staffing Services</a></div>
+          <div class="footer-contact-item"><a href="foam-industries.html">→ Shivtej Industries (Foam)</a></div>
+          <div class="footer-contact-item"><a href="index.html">→ Shivtej Group Home</a></div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Recruitment Contact</h5>
+          <div class="footer-contact-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+            <a href="mailto:shivtejentp1575@gmail.com">shivtejentp1575@gmail.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+            <a href="tel:+918805521152">+91 8805521152</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Shivtej Group. All rights reserved.</p>
+        <p>Bhosari, PCMC & Chikhli, Maharashtra</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/three.min.js"></script>
+  <script src="js/antigravity-3d.js"></script>
+  <script src="js/jobs-data.js"></script>
+  <script src="js/jobs-app.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

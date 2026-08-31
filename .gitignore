@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Dev / audit artifacts (not part of the deployed site)
+screenshots/
+audit_report.json
+audit_ui.js
+deep_playwright_explorer.js
+serve_site.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
