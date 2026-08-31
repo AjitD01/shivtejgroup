@@ -97,7 +97,7 @@ main {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.45;
 }
 
 img, picture, video {
@@ -1782,8 +1782,7 @@ section {
 .ag-tilt {
   position: relative;
   transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Holographic light glare that tracks the cursor */
@@ -1798,29 +1797,26 @@ section {
   z-index: 3;
 }
 
-/* Push inner media/content forward on the Z-axis while tilting */
+/* Gently lift inner media forward on the Z-axis while tilting */
 .ag-tilt:hover .product-img-box,
-.ag-tilt:hover .hero-card-img-wrap,
-.ag-tilt:hover h3,
-.ag-tilt:hover h4 {
-  transform: translateZ(28px);
-  transition: transform var(--transition-smooth);
+.ag-tilt:hover .hero-card-img-wrap {
+  transform: translateZ(10px);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Staggered depth scroll reveal */
+/* Subtle staggered scroll reveal — light fade + short rise */
 .ag-reveal {
   opacity: 0;
-  transform: translateY(48px) scale(0.97) rotateX(6deg);
-  transform-origin: center bottom;
+  transform: translateY(22px);
   transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.5s ease-out,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .ag-reveal.ag-visible {
   opacity: 1;
-  transform: translateY(0) scale(1) rotateX(0deg);
+  transform: translateY(0);
 }
 
 /* Once revealed, hand transform control back to the tilt engine cleanly */

@@ -52,25 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const siteHeader = document.querySelector('.site-header');
   const backToTopBtn = document.getElementById('backToTopBtn');
 
+  let scrollTicking = false;
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
 
-    if (siteHeader) {
-      if (scrollY > 30) {
-        siteHeader.classList.add('scrolled');
-      } else {
-        siteHeader.classList.remove('scrolled');
+      if (siteHeader) {
+        siteHeader.classList.toggle('scrolled', scrollY > 30);
       }
-    }
-
-    if (backToTopBtn) {
-      if (scrollY > 300) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
+      if (backToTopBtn) {
+        backToTopBtn.classList.toggle('visible', scrollY > 300);
       }
-    }
-  });
+      scrollTicking = false;
+    });
+  }, { passive: true });
 
   if (backToTopBtn) {
     backToTopBtn.addEventListener('click', () => {

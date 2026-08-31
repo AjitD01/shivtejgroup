@@ -325,7 +325,7 @@ class Global3DSpatialEngine {
       opacity: 0.35
     });
 
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 12; i++) {
       const node = new THREE.Mesh(nodeGeom, nodeMat);
       node.position.set(
         (Math.random() - 0.5) * 35,
@@ -338,7 +338,7 @@ class Global3DSpatialEngine {
   }
 
   createFloatingPolymerDust() {
-    const count = 220;
+    const count = 110;
     const geom = new THREE.BufferGeometry();
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
@@ -362,10 +362,10 @@ class Global3DSpatialEngine {
     geom.setAttribute('color', new THREE.BufferAttribute(col, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: 0.14,
+      size: 0.11,
       vertexColors: true,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.32,
       blending: THREE.AdditiveBlending
     });
 
@@ -385,7 +385,7 @@ class Global3DSpatialEngine {
   onScroll() {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = window.scrollY / (maxScroll || 1);
-    this.targetScrollY = progress * 30; // 3D Camera depth travel
+    this.targetScrollY = progress * 16; // 3D Camera depth travel (gentle)
   }
 
   onMouseMove(e) {
@@ -398,12 +398,12 @@ class Global3DSpatialEngine {
     const elapsed = this.clock.getElapsedTime();
 
     // Smooth 3D scroll inertia
-    this.scrollY += (this.targetScrollY - this.scrollY) * 0.06;
+    this.scrollY += (this.targetScrollY - this.scrollY) * 0.05;
 
-    // Smooth camera orientation
+    // Smooth camera orientation (subtle sway)
     this.camera.position.y = -this.scrollY * 0.5;
-    this.camera.rotation.x = this.mouseY * 0.05 - (this.scrollY * 0.01);
-    this.camera.rotation.y = this.mouseX * 0.05;
+    this.camera.rotation.x = this.mouseY * 0.025 - (this.scrollY * 0.008);
+    this.camera.rotation.y = this.mouseX * 0.025;
 
     // Gentle rotation of background spatial elements
     if (this.spatialMeshGroup) {
@@ -661,23 +661,23 @@ function setupGlobal3DSpatialParallax() {
       const px = (e.clientX - rect.left) / rect.width;   // 0..1
       const py = (e.clientY - rect.top) / rect.height;   // 0..1
 
-      const rotateX = (py - 0.5) * -14;
-      const rotateY = (px - 0.5) * 14;
+      const rotateX = (py - 0.5) * -6;
+      const rotateY = (px - 0.5) * 6;
 
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         card.style.transform =
-          `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(18px) scale(1.015)`;
+          `perspective(1400px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`;
         glare.style.opacity = '1';
         glare.style.background =
-          `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255,255,255,0.28), rgba(255,255,255,0) 45%)`;
+          `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255,255,255,0.14), rgba(255,255,255,0) 50%)`;
       });
     });
 
     card.addEventListener('mouseleave', () => {
       if (rafId) cancelAnimationFrame(rafId);
       card.style.transform =
-        'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)';
+        'perspective(1400px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
       glare.style.opacity = '0';
     });
   });
@@ -708,8 +708,10 @@ function setupScrollReveal() {
         ? Array.from(el.parentElement.children).filter(c => c.classList.contains('ag-reveal'))
         : [el];
       const idx = Math.max(0, siblings.indexOf(el));
-      el.style.transitionDelay = Math.min(idx * 90, 450) + 'ms';
+      el.style.transitionDelay = Math.min(idx * 55, 275) + 'ms';
       el.classList.add('ag-visible');
+      // Free the compositor layer once the entrance finishes
+      el.addEventListener('transitionend', () => { el.style.willChange = 'auto'; }, { once: true });
       obs.unobserve(el);
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
