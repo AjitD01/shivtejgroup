@@ -1,4 +1,9 @@
 {
+  "name": "shivtej-industries",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "python serve_site.py"
+  },
   "devDependencies": {
     "playwright": "^1.62.1"
   }
