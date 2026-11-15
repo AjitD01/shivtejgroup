@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruiter Portal | Shivtej Placement Services</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .admin-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .auth-card {
+      max-width: 440px;
+      margin: 4rem auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2.5rem;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .dashboard-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    }
+    .admin-tab-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .admin-tab-btn {
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--color-muted);
+      transition: all 0.2s;
+    }
+    .admin-tab-btn.active {
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .job-admin-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body style="background: #f8fafc;">
+
+  <!-- Simple Header -->
+  <header style="background: #ffffff; border-bottom: 1px solid var(--color-border); padding: 1rem 0;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+        <img src="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png" alt="Shivtej Group" width="180" height="44">
+      </a>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-slate); text-transform: uppercase;">Private Recruiter Console</span>
+        <a href="jobs.html" target="_blank" class="btn btn-outline btn-sm" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">View Live Board &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. LOGIN SCREEN (Visible if not authenticated) -->
+    <div id="authScreen" class="auth-card">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="width: 48px; height: 48px; border-radius: 12px; background: #e0f2fe; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #0284c7;">
+          <svg class="ui-icon ui-icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">Recruiter Sign In</h2>
+        <p style="font-size: 0.88rem; color: var(--color-muted);">Enter your credentials to create &amp; manage job openings</p>
+      </div>
+
+      <form id="recruiterLoginForm">
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="loginId" class="form-label">Recruiter ID / Username *</label>
+          <input type="text" id="loginId" class="form-control" required placeholder="Enter Login ID" autocomplete="username">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label for="loginPassword" class="form-label">Password *</label>
+          <input type="password" id="loginPassword" class="form-control" required placeholder="Enter Password" autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In to Recruiter Console</button>
+
+        <div id="loginFeedback" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem;"></div>
+
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.8rem; color: var(--color-muted); line-height: 1.5;">
+          <strong>Default Credentials:</strong><br>
+          Login ID: <code style="background: #f1f5f9; padding: 2px 4px; border-radius: 4px;">admin</code> &bull; Password: <code style="background: #f1f5f9; padding: 2px 4px; border-radius: 4px;">Shivtej@2025</code><br>
+          <span style="font-size: 0.75rem; color: #94a3b8;">(You can customize credentials inside the portal anytime)</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- 2. RECRUITER DASHBOARD (Revealed only after authentication) -->
+    <div id="dashboardScreen" class="admin-container" style="display: none;">
+      
+      <!-- Top Status Banner -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #ffffff; padding: 1rem 1.5rem; border-radius: 8px; border: 1px solid var(--color-border);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #16a34a;"></span>
+          <span style="font-size: 0.9rem; font-weight: 600; color: #166534;">Authenticated as <strong id="currentAdminName">admin</strong></span>
+          <span style="font-size: 0.8rem; color: var(--color-muted);">&bull; Database: Supabase <code>job_openings</code></span>
+        </div>
+        <button type="button" id="adminSignOutBtn" class="btn btn-outline btn-sm" style="color: #ef4444; border-color: #fca5a5;">Sign Out</button>
+      </div>
+
+      <div class="dashboard-card">
+        <!-- Tabs -->
+        <div class="admin-tab-nav">
+          <button type="button" class="admin-tab-btn active" id="tabPostJob">➕ Post New Job Opening</button>
+          <button type="button" class="admin-tab-btn" id="tabManageJobs">📋 Active Openings (<span id="totalOpeningsCount">0</span>)</button>
+          <button type="button" class="admin-tab-btn" id="tabSettings">🔒 Change Password</button>
+        </div>
+
+        <!-- Tab 1: Post or Edit Job Opening -->
+        <div id="panelPostJob">
+          <form id="jobOpeningForm">
+            <input type="hidden" id="editOpeningId" value="">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <h3 id="formModeHeading" style="font-size: 1.2rem; font-weight: 700; color: var(--color-dark); margin: 0;">Create New Job Vacancy</h3>
+              <span id="editingIndicator" style="display: none; background: #fef3c7; color: #92400e; font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 12px;">Editing Mode</span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label for="jobTitleInput" class="form-label">Job Title *</label>
+              <input type="text" id="jobTitleInput" class="form-control" required placeholder="e.g. Senior CNC Programmer / Production Supervisor / React Developer">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+              <div class="form-group">
+                <label for="jobDeptSelect" class="form-label">Department *</label>
+                <select id="jobDeptSelect" class="form-control" required>
+                  <option value="IT & Software Development">IT &amp; Software Development</option>
+                  <option value="Engineering & Embedded Tech">Engineering &amp; Embedded Tech</option>
+                  <option value="Manufacturing Operations">Manufacturing Operations</option>
+                  <option value="Quality Engineering">Quality Engineering</option>
+                  <option value="Sales & Marketing">Sales &amp; Marketing</option>
+                  <option value="Human Resources">Human Resources</option>
+                  <option value="Tooling & Fabrication">Tooling &amp; Fabrication</option>
+                  <option value="Facility Management">Facility Management</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="jobLocInput" class="form-label">Location *</label>
+                <input type="text" id="jobLocInput" class="form-control" required placeholder="e.g. Bhosari, Pune / Chikhli, Pune / Remote">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+              <div class="form-group">
+                <label for="jobTypeSelect" class="form-label">Employment Type</label>
+                <select id="jobTypeSelect" class="form-control">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Temporary">Temporary</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="jobExpInput" class="form-label">Experience</label>
+                <input type="text" id="jobExpInput" class="form-control" placeholder="e.g. Mid Level (2-5 yrs)">
+              </div>
+              <div class="form-group">
+                <label for="jobSalaryInput" class="form-label">Salary Range</label>
+                <input type="text" id="jobSalaryInput" class="form-control" placeholder="e.g. ₹35,000 - ₹55,000 / month">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label for="jobDescText" class="form-label">Job Description &amp; Responsibilities *</label>
+              <textarea id="jobDescText" class="form-control" rows="4" required placeholder="Detailed role summary, core tasks, key qualifications..."></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+                <input type="checkbox" id="jobUrgentCheck"> Mark with "Urgent Hiring" Badge
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+              <button type="submit" id="saveOpeningBtn" class="btn btn-primary" style="flex: 1;">
+                Publish Job Opening to Supabase
+              </button>
+              <button type="button" id="cancelEditBtn" class="btn btn-outline" style="display: none;">
+                Cancel Edit
+              </button>
+            </div>
+
+            <div id="formFeedback" style="display: none; margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.9rem;"></div>
+          </form>
+        </div>
+
+        <!-- Tab 2: Manage Active Openings -->
+        <div id="panelManageJobs" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-dark); margin: 0;">Active Openings in Database</h3>
+            <button type="button" id="refreshListBtn" class="btn btn-outline btn-sm">Refresh List</button>
+          </div>
+          <div id="openingsListContainer"></div>
+        </div>
+
+        <!-- Tab 3: Change Password -->
+        <div id="panelSettings" style="display: none;">
+          <form id="changePasswordForm" style="max-width: 440px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-dark); margin-bottom: 1rem;">Change Recruiter Credentials</h3>
+            
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label for="newLoginId" class="form-label">New Login ID *</label>
+              <input type="text" id="newLoginId" class="form-control" required placeholder="Enter new Login ID">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label for="newPassword" class="form-label">New Password *</label>
+              <input type="password" id="newPassword" class="form-control" required placeholder="Minimum 6 characters">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Save New Credentials</button>
+            <div id="settingsFeedback" style="display: none; margin-top: 1rem; padding: 0.65rem; border-radius: 6px; font-size: 0.85rem;"></div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/jobs-data.js"></script>
+  <script src="js/recruiter-admin.js"></script>
+</body>
+</html>
