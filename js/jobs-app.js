@@ -1,7 +1,15 @@
 /**
- * Shivtej Placement Services - Interactive Job Board & In-Browser Job Manager (CMS)
- * 100% Frontend-driven, Netlify compatible, with live Supabase Database integration
- * for storing & editing Job Openings, plus candidate application handling.
+ * Shivtej Placement Services - Interactive Job Board
+ * 
+ * Features:
+ * 1. Dynamically loads verified active job openings from Supabase database (`job_openings`).
+ * 2. Real-time filtering by keyword, location, department, and employment type.
+ * 3. Secure candidate application modal that saves incoming applications to Supabase (`job_applications`)
+ *    and launches WhatsApp / Email with pre-filled application details.
+ * 
+ * Security:
+ * - Public visitors can ONLY view active job openings.
+ * - Public visitors CANNOT modify, post, or delete jobs (restricted to Supabase Dashboard).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,20 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitResumeWhatsAppBtn = document.getElementById('submitResumeWhatsAppBtn');
   const submitResumeEmailBtn = document.getElementById('submitResumeEmailBtn');
   const applyModalStatus = document.getElementById('applyModalStatus');
-
-  // DOM Elements - Recruiter Admin Manager
-  const openAdminBtn = document.getElementById('openJobAdminBtn');
-  const adminModal = document.getElementById('jobAdminModal');
-  const closeAdminBtn = document.getElementById('closeJobAdminBtn');
-  const createJobForm = document.getElementById('createJobForm') || document.getElementById('addNewJobForm');
-  const adminJobListContainer = document.getElementById('adminJobList');
-  const adminJobCountEl = document.getElementById('adminJobCount');
-  const editJobIdInput = document.getElementById('editJobId');
-  const adminFormModeTitle = document.getElementById('adminFormModeTitle');
-  const editingBadge = document.getElementById('editingBadge');
-  const saveJobBtn = document.getElementById('saveJobBtn');
-  const cancelEditJobBtn = document.getElementById('cancelEditJobBtn');
-  const createJobStatus = document.getElementById('createJobStatus');
 
   let currentFilteredJobs = [...allJobs];
 
@@ -144,9 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
             saveStoredJobs(allJobs);
           }
           applyFilters();
-          if (adminModal && adminModal.classList.contains('active')) {
-            renderAdminJobList();
-          }
         }
       } catch (err) {
         console.warn('[Jobs] Error syncing from Supabase:', err);
@@ -326,275 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (submitResumeEmailBtn) {
     submitResumeEmailBtn.addEventListener('click', () => handleApplicationSubmission('email'));
-  }
-
-  // --------------------------------------------------------------------------
-  // 5. In-Browser Recruiter Admin Manager (Create, Edit, Delete with Supabase)
-  // --------------------------------------------------------------------------
-  if (openAdminBtn) {
-    openAdminBtn.addEventListener('click', () => {
-      if (adminModal) {
-        adminModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        resetAdminForm();
-        renderAdminJobList();
-      }
-    });
-  }
-
-  function closeAdminModal() {
-    if (adminModal) {
-      adminModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-      resetAdminForm();
-    }
-  }
-
-  if (closeAdminBtn) closeAdminBtn.addEventListener('click', closeAdminModal);
-  if (adminModal) {
-    adminModal.addEventListener('click', (e) => {
-      if (e.target === adminModal) closeAdminModal();
-    });
-  }
-
-  function resetAdminForm() {
-    if (createJobForm) createJobForm.reset();
-    if (editJobIdInput) editJobIdInput.value = '';
-    if (adminFormModeTitle) adminFormModeTitle.innerText = 'Add New Job Opening';
-    if (editingBadge) editingBadge.style.display = 'none';
-    if (saveJobBtn) saveJobBtn.innerText = 'Publish Job Opening';
-    if (cancelEditJobBtn) cancelEditJobBtn.style.display = 'none';
-    if (createJobStatus) {
-      createJobStatus.innerHTML = '';
-      createJobStatus.style.display = 'none';
-    }
-  }
-
-  if (cancelEditJobBtn) {
-    cancelEditJobBtn.addEventListener('click', resetAdminForm);
-  }
-
-  function startEditingJob(jobId) {
-    const job = allJobs.find(j => j.id === jobId);
-    if (!job) return;
-
-    if (editJobIdInput) editJobIdInput.value = job.id;
-    const titleInput = document.getElementById('newJobTitle');
-    const deptInput = document.getElementById('newJobDept');
-    const locInput = document.getElementById('newJobLoc');
-    const typeInput = document.getElementById('newJobType');
-    const expInput = document.getElementById('newJobExp');
-    const salaryInput = document.getElementById('newJobSalary');
-    const descInput = document.getElementById('newJobDesc');
-    const urgentInput = document.getElementById('newJobUrgent');
-
-    if (titleInput) titleInput.value = job.title || '';
-    if (deptInput) deptInput.value = job.department || 'IT & Software Development';
-    if (locInput) locInput.value = job.location || 'Pune';
-    if (typeInput) typeInput.value = job.type || 'Full-time';
-    if (expInput) expInput.value = job.experience || '';
-    if (salaryInput) salaryInput.value = job.salary || '';
-    if (descInput) descInput.value = job.description || '';
-    if (urgentInput) urgentInput.checked = Boolean(job.urgent);
-
-    if (adminFormModeTitle) adminFormModeTitle.innerText = `Edit Opening: ${job.title.substring(0, 32)}...`;
-    if (editingBadge) editingBadge.style.display = 'inline-block';
-    if (saveJobBtn) saveJobBtn.innerText = 'Save Changes (Update in Supabase)';
-    if (cancelEditJobBtn) cancelEditJobBtn.style.display = 'block';
-
-    if (createJobStatus) {
-      createJobStatus.style.display = 'block';
-      createJobStatus.style.background = '#eff6ff';
-      createJobStatus.style.color = '#1e40af';
-      createJobStatus.style.border = '1px solid #bfdbfe';
-      createJobStatus.style.padding = '0.5rem 0.75rem';
-      createJobStatus.style.borderRadius = '6px';
-      createJobStatus.style.fontSize = '0.85rem';
-      createJobStatus.innerHTML = `Editing job <strong>${escapeHtml(job.id)}</strong>. Modify fields and click "Save Changes".`;
-    }
-
-    createJobForm?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  function renderAdminJobList() {
-    if (!adminJobListContainer) return;
-    if (adminJobCountEl) adminJobCountEl.innerText = `${allJobs.length}`;
-
-    if (allJobs.length === 0) {
-      adminJobListContainer.innerHTML = `<p style="color: #94a3b8; padding: 1rem;">No jobs listed currently.</p>`;
-      return;
-    }
-
-    let html = '';
-    allJobs.forEach(job => {
-      html += `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 0.5rem; border-bottom:1px solid #e2e8f0; gap:0.5rem;">
-          <div style="flex:1; min-width:0;">
-            <div style="font-weight:600; color:#0f172a; font-size:0.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-              ${escapeHtml(job.title)}
-            </div>
-            <div style="font-size:0.78rem; color:#64748b; margin-top:2px;">
-              <span style="color:#2563eb; font-weight:500;">${escapeHtml(job.department)}</span> • ${escapeHtml(job.location)} • <span style="font-family:monospace;">${escapeHtml(job.id)}</span>
-            </div>
-          </div>
-          <div style="display:flex; gap:0.4rem; flex-shrink:0;">
-            <button type="button" class="btn btn-outline btn-sm edit-job-btn" data-job-id="${escapeHtml(job.id)}" style="padding:0.25rem 0.6rem; font-size:0.75rem; border-color:#94a3b8; color:#334155;">
-              Edit
-            </button>
-            <button type="button" class="btn btn-outline btn-sm delete-job-btn" data-job-id="${escapeHtml(job.id)}" style="color: #ef4444; border-color: #fca5a5; padding:0.25rem 0.6rem; font-size:0.75rem;">
-              Delete
-            </button>
-          </div>
-        </div>
-      `;
-    });
-
-    adminJobListContainer.innerHTML = html;
-
-    // Attach Edit button listeners
-    adminJobListContainer.querySelectorAll('.edit-job-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const jid = btn.getAttribute('data-job-id');
-        startEditingJob(jid);
-      });
-    });
-
-    // Attach Delete button listeners
-    adminJobListContainer.querySelectorAll('.delete-job-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const jid = btn.getAttribute('data-job-id');
-        const job = allJobs.find(j => j.id === jid);
-        const jobTitle = job ? job.title : jid;
-
-        if (confirm(`Are you sure you want to delete "${jobTitle}"? This will delete it from the website and Supabase database.`)) {
-          btn.disabled = true;
-          btn.innerText = 'Deleting...';
-
-          if (typeof deleteJobOpening === 'function') {
-            await deleteJobOpening(jid);
-          }
-
-          allJobs = allJobs.filter(j => j.id !== jid);
-          if (typeof saveStoredJobs === 'function') {
-            saveStoredJobs(allJobs);
-          }
-
-          renderAdminJobList();
-          applyFilters();
-
-          if (editJobIdInput && editJobIdInput.value === jid) {
-            resetAdminForm();
-          }
-        }
-      });
-    });
-  }
-
-  // Handle New Job or Edit Submission from Recruiter Form
-  if (createJobForm) {
-    createJobForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const editId = (editJobIdInput ? editJobIdInput.value : '').trim();
-      const title = (document.getElementById('newJobTitle')?.value || '').trim();
-      const dept = (document.getElementById('newJobDept')?.value || 'IT & Software Development').trim();
-      const loc = (document.getElementById('newJobLoc')?.value || 'Pune').trim();
-      const type = (document.getElementById('newJobType')?.value || 'Full-time').trim();
-      const exp = (document.getElementById('newJobExp')?.value || 'Mid Level').trim();
-      const salary = (document.getElementById('newJobSalary')?.value || '').trim();
-      const desc = (document.getElementById('newJobDesc')?.value || '').trim();
-      const urgent = Boolean(document.getElementById('newJobUrgent')?.checked);
-
-      if (!title || !desc) {
-        alert('Please provide at least a Job Title and Description.');
-        return;
-      }
-
-      if (saveJobBtn) {
-        saveJobBtn.disabled = true;
-        saveJobBtn.innerText = 'Saving to database...';
-      }
-
-      let targetJob = null;
-
-      if (editId) {
-        // Update existing job
-        const index = allJobs.findIndex(j => j.id === editId);
-        if (index !== -1) {
-          allJobs[index] = {
-            ...allJobs[index],
-            title,
-            department: dept,
-            location: loc,
-            type,
-            experience: exp,
-            salary,
-            description: desc,
-            urgent
-          };
-          targetJob = allJobs[index];
-        }
-      } else {
-        // Create new job
-        let newId;
-        do {
-          newId = "JOB-" + Math.floor(100 + Math.random() * 900);
-        } while (allJobs.some(j => j.id === newId));
-
-        targetJob = {
-          id: newId,
-          title,
-          department: dept,
-          location: loc,
-          type,
-          experience: exp,
-          salary,
-          postedDate: new Date().toISOString().split('T')[0],
-          urgent,
-          description: desc,
-          responsibilities: ['Execute assigned engineering and business deliverables with high quality.'],
-          requirements: ['Relevant experience in the required technological domain.']
-        };
-
-        allJobs.unshift(targetJob);
-      }
-
-      // 1. Sync to Supabase table `job_openings`
-      if (typeof saveJobOpening === 'function' && targetJob) {
-        try {
-          await saveJobOpening(targetJob);
-        } catch (err) {
-          console.warn('[Jobs] Error syncing job to Supabase:', err);
-        }
-      }
-
-      // 2. Persist locally
-      if (typeof saveStoredJobs === 'function') {
-        saveStoredJobs(allJobs);
-      }
-
-      if (saveJobBtn) {
-        saveJobBtn.disabled = false;
-      }
-
-      if (createJobStatus) {
-        createJobStatus.style.display = 'block';
-        createJobStatus.style.background = '#f0fdf4';
-        createJobStatus.style.color = '#15803d';
-        createJobStatus.style.border = '1px solid #bbf7d0';
-        createJobStatus.style.padding = '0.75rem';
-        createJobStatus.style.borderRadius = '6px';
-        createJobStatus.style.fontSize = '0.9rem';
-        createJobStatus.innerHTML = `✓ Job <strong>"${escapeHtml(targetJob.title)}"</strong> was successfully ${editId ? 'updated' : 'published'} and saved to Supabase!`;
-      }
-
-      renderAdminJobList();
-      applyFilters();
-
-      setTimeout(() => {
-        resetAdminForm();
-      }, 1800);
-    });
   }
 
   function escapeHtml(str) {
