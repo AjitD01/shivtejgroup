@@ -12,6 +12,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid Level (2-5 yrs)",
     salary: "₹45,000 - ₹75,000 / month",
+    positions: 4,
     postedDate: "2025-03-01",
     urgent: true,
     description: "Shivtej Placement Services is hiring a Full Stack Developer on behalf of a leading technology client in Pune. You will build and scale web applications, APIs, and client portals.",
@@ -35,6 +36,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Junior to Mid (2-4 yrs)",
     salary: "₹35,000 - ₹55,000 / month",
+    positions: 2,
     postedDate: "2025-02-28",
     urgent: false,
     description: "Seeking a detail-oriented QA Automation Engineer to design, script, and maintain end-to-end automated testing suites for enterprise client platforms.",
@@ -57,6 +59,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid Level (3-6 yrs)",
     salary: "₹40,000 - ₹65,000 / month",
+    positions: 3,
     postedDate: "2025-02-26",
     urgent: true,
     description: "Urgent opening for an Embedded Systems Engineer to develop firmware and control systems for industrial automation and automotive sensors.",
@@ -79,6 +82,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid Level (3-5 yrs)",
     salary: "₹30,000 - ₹45,000 / month",
+    positions: 2,
     postedDate: "2025-02-25",
     urgent: true,
     description: "We are seeking an experienced Production Supervisor to oversee foam die-cutting, gasket fabrication, and sheet extrusion lines at our manufacturing facility in Chikhli.",
@@ -102,6 +106,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Junior (1-3 yrs)",
     salary: "₹22,000 - ₹32,000 / month",
+    positions: 3,
     postedDate: "2025-02-22",
     urgent: false,
     description: "Responsible for in-process inspection and final QA testing of precision die-cut gaskets, foam tapes, and thermal insulation pads.",
@@ -124,6 +129,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid (2-4 yrs)",
     salary: "₹25,000 - ₹40,000 + Incentives",
+    positions: 4,
     postedDate: "2025-02-20",
     urgent: true,
     description: "Drive corporate business growth by acquiring automotive OEM, IT client staffing, and electronics packaging clients across Maharashtra.",
@@ -146,6 +152,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid (2-5 yrs)",
     salary: "₹25,000 - ₹38,000 / month",
+    positions: 2,
     postedDate: "2025-02-18",
     urgent: false,
     description: "Oversee client manpower payroll calculations, PF/ESIC statutory compliance, contractor attendance, and worker onboarding for client companies.",
@@ -168,6 +175,7 @@ const DEFAULT_JOBS = [
     type: "Full-time",
     experience: "Mid to Senior (3-6 yrs)",
     salary: "₹28,000 - ₹42,000 / month",
+    positions: 3,
     postedDate: "2025-02-15",
     urgent: false,
     description: "Fabricate, maintain, and sharpen rotary and flatbed cutting dies, wooden punch dies, and steel rule tooling for custom foam gasket shapes.",
@@ -191,7 +199,10 @@ function getStoredJobs() {
       const parsed = JSON.parse(stored);
       // Only trust a well-formed, non-empty array of job objects.
       if (Array.isArray(parsed) && parsed.length && parsed.every(j => j && typeof j === 'object')) {
-        return parsed;
+        return parsed.map(j => ({
+          ...j,
+          positions: Number(j.positions) || (j.id === 'JOB-101' ? 4 : (j.id === 'JOB-106' ? 4 : (j.id === 'JOB-103' ? 3 : (j.id === 'JOB-105' ? 3 : (j.id === 'JOB-108' ? 3 : (j.id === 'JOB-102' ? 2 : (j.id === 'JOB-104' ? 2 : (j.id === 'JOB-107' ? 2 : 1))))))))
+        }));
       }
       console.warn("Stored jobs are malformed; restoring default catalog.");
     } catch (e) {

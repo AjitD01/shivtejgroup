@@ -64,6 +64,28 @@
       margin-bottom: 0.75rem;
       gap: 1rem;
     }
+    .admin-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .admin-grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 768px) {
+      .admin-grid-4 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .admin-grid-4, .admin-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body style="background: #f8fafc;">
@@ -150,7 +172,7 @@
               <input type="text" id="jobTitleInput" class="form-control" required placeholder="e.g. Senior CNC Programmer / Production Supervisor / React Developer">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div class="admin-grid-2">
               <div class="form-group">
                 <label for="jobDeptSelect" class="form-label">Department *</label>
                 <select id="jobDeptSelect" class="form-control" required>
@@ -170,7 +192,11 @@
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div class="admin-grid-4">
+              <div class="form-group">
+                <label for="jobPositionsInput" class="form-label">Positions / Openings *</label>
+                <input type="number" id="jobPositionsInput" class="form-control" min="1" max="500" value="1" required placeholder="e.g. 4">
+              </div>
               <div class="form-group">
                 <label for="jobTypeSelect" class="form-label">Employment Type</label>
                 <select id="jobTypeSelect" class="form-control">

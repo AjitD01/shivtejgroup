@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let html = '';
     jobsToRender.forEach(job => {
       const isTech = job.department && (job.department.toLowerCase().includes('it') || job.department.toLowerCase().includes('software'));
+      const positions = Number(job.positions) || 1;
+      const positionsText = positions > 1 ? `${positions} Openings` : '1 Opening';
+
       html += `
         <div class="job-card" data-job-id="${escapeHtml(job.id)}">
           <div class="job-card-header">
@@ -72,6 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="job-meta-row">
+            <span class="job-meta-item positions-tag" title="${positions} open vacancies">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              ${positionsText}
+            </span>
             <span class="job-meta-item">
               <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
               ${escapeHtml(job.location)}
@@ -124,7 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const dbJobs = await fetchJobOpenings();
         if (Array.isArray(dbJobs) && dbJobs.length > 0) {
-          allJobs = dbJobs;
+          // Merge with any active local jobs to preserve positions if database column is pending
+          allJobs = dbJobs.map(dbJob => {
+            const localMatch = allJobs.find(lj => lj.id === dbJob.id);
+            return {
+              ...dbJob,
+              positions: (dbJob.positions && dbJob.positions > 1) 
+                ? dbJob.positions 
+                : (localMatch?.positions || dbJob.positions || 1)
+            };
+          });
           if (typeof saveStoredJobs === 'function') {
             saveStoredJobs(allJobs);
           }
@@ -189,8 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const job = allJobs.find(j => j.id === jobId);
     if (!job || !applyModal) return;
 
+    const positions = Number(job.positions) || 1;
+    const positionsText = positions > 1 ? `${positions} Openings` : '1 Opening';
+
     if (applyModalTitle) applyModalTitle.innerText = `Apply for: ${job.title}`;
-    if (applyJobDept) applyJobDept.innerText = `${job.department} • Ref: ${job.id}`;
+    if (applyJobDept) applyJobDept.innerText = `${job.department} • Ref: ${job.id} • ${positionsText}`;
     if (applyJobIdInput) applyJobIdInput.value = job.id;
     if (applyJobTitleInput) applyJobTitleInput.value = job.title;
 

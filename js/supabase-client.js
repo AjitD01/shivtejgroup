@@ -61,6 +61,22 @@ function mapSupabaseJobToApp(item) {
     requirements = [];
   }
 
+  let parsedPositions = item.positions ? Number(item.positions) : null;
+  const rawDesc = item.description || '';
+  if (!parsedPositions && rawDesc) {
+    const match = rawDesc.match(/<!--pos:(\d+)-->/) || rawDesc.match(/(?:positions?|openings?|vacancies):\s*(\d+)/i);
+    if (match) parsedPositions = parseInt(match[1], 10);
+  }
+  const cleanDescription = rawDesc.replace(/<!--pos:\d+-->/g, '').trim();
+
+  // Smart defaults for standard catalog roles if positions not explicitly set
+  if (!parsedPositions) {
+    if (item.id === 'JOB-101' || item.id === 'JOB-106') parsedPositions = 4;
+    else if (item.id === 'JOB-103' || item.id === 'JOB-105' || item.id === 'JOB-108') parsedPositions = 3;
+    else if (item.id === 'JOB-102' || item.id === 'JOB-104' || item.id === 'JOB-107') parsedPositions = 2;
+    else parsedPositions = 1;
+  }
+
   return {
     id: item.id,
     title: item.title,
@@ -69,9 +85,10 @@ function mapSupabaseJobToApp(item) {
     type: item.type || 'Full-time',
     experience: item.experience || 'Mid Level',
     salary: item.salary || '',
+    positions: parsedPositions,
     postedDate: item.posted_date || (item.created_at ? item.created_at.split('T')[0] : new Date().toISOString().split('T')[0]),
     urgent: Boolean(item.urgent),
-    description: item.description || '',
+    description: cleanDescription,
     responsibilities: responsibilities.length ? responsibilities : ['Execute assigned engineering and business deliverables with high quality.'],
     requirements: requirements.length ? requirements : ['Relevant experience in the required technological domain.'],
     is_active: item.is_active !== false,
@@ -80,6 +97,9 @@ function mapSupabaseJobToApp(item) {
 }
 
 function mapAppJobToSupabase(job) {
+  const cleanDesc = (job.description || '').replace(/<!--pos:\d+-->/g, '').trim();
+  const descWithMeta = cleanDesc + (job.positions ? ` <!--pos:${job.positions}-->` : '');
+
   return {
     id: job.id,
     title: job.title,
@@ -88,9 +108,10 @@ function mapAppJobToSupabase(job) {
     type: job.type || 'Full-time',
     experience: job.experience || 'Mid Level',
     salary: job.salary || '',
+    positions: Number(job.positions) || 1,
     posted_date: job.postedDate || new Date().toISOString().split('T')[0],
     urgent: Boolean(job.urgent),
-    description: job.description || '',
+    description: descWithMeta,
     responsibilities: Array.isArray(job.responsibilities) ? job.responsibilities : [job.responsibilities || 'Execute assigned deliverables.'],
     requirements: Array.isArray(job.requirements) ? job.requirements : [job.requirements || 'Relevant experience in domain.'],
     is_active: job.is_active !== false,
@@ -145,16 +166,27 @@ async function saveJobOpening(job) {
 
   if (client) {
     try {
-      const { error } = await client
+      let { error } = await client
         .from('job_openings')
         .upsert([record], { onConflict: 'id' });
+
+      // Fallback: If 'positions' column is not yet migrated in Supabase, retry without positions column
+      if (error && error.message && error.message.toLowerCase().includes('positions')) {
+        console.warn('[Supabase] "positions" column not found in database yet. Falling back without positions column.');
+        const fallbackRecord = { ...record };
+        delete fallbackRecord.positions;
+        const retryResult = await client
+          .from('job_openings')
+          .upsert([fallbackRecord], { onConflict: 'id' });
+        error = retryResult.error;
+      }
 
       if (error) {
         console.error('[Supabase] Upsert error:', error);
         return { success: false, error: error.message };
       }
 
-      console.log('[Supabase] Job opening synced:', record.id);
+      console.log('[Supabase] Job opening synced:', record.id, 'positions:', record.positions);
       return { success: true, id: record.id };
     } catch (err) {
       console.error('[Supabase] saveJobOpening exception:', err);

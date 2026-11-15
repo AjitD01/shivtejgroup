@@ -1,18 +1,26 @@
 -- ============================================================================
--- SHIVTEJ PLACEMENT SERVICES - SECURE PRODUCTION RLS POLICIES
+-- SHIVTEJ PLACEMENT SERVICES - SECURE PRODUCTION RLS POLICIES & SCHEMA
 -- Project: oyqtaytychzjhxlzbnyf
 -- 
--- Security Architecture:
 -- 1. public.job_openings:
+--    - Columns: id, title, department, location, type, experience, salary,
+--      posted_date, urgent, description, responsibilities, requirements,
+--      is_active, display_order, positions (number of openings, e.g. 4),
+--      created_at, updated_at
 --    - PUBLIC (anon): READ-ONLY (can view active job vacancies)
---    - ADMINS (authenticated): Full access (Create, Edit, Delete via Supabase Dashboard)
---    * Nobody on the public internet can post or modify jobs!
+--    - ADMINS (authenticated): Full access (Create, Edit, Delete)
 --
 -- 2. public.job_applications:
 --    - PUBLIC (anon): INSERT-ONLY (can submit their own job application)
 --    - PUBLIC (anon): BLOCKED from SELECT (cannot see other candidates' details)
 --    - ADMINS (authenticated): Full SELECT & UPDATE access in Supabase Dashboard
 -- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 0. SCHEMA MIGRATION: ADD 'positions' (Number of Openings per Job)
+-- Run this in Supabase SQL Editor if 'positions' column is not yet present:
+-- ----------------------------------------------------------------------------
+alter table public.job_openings add column if not exists positions integer default 1;
 
 -- ----------------------------------------------------------------------------
 -- 1. SECURE POLICIES FOR: job_openings

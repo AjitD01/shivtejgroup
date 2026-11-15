@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const formModeHeading = document.getElementById('formModeHeading');
   const editingIndicator = document.getElementById('editingIndicator');
   const jobTitleInput = document.getElementById('jobTitleInput');
+  const jobPositionsInput = document.getElementById('jobPositionsInput');
   const jobDeptSelect = document.getElementById('jobDeptSelect');
   const jobLocInput = document.getElementById('jobLocInput');
   const jobTypeSelect = document.getElementById('jobTypeSelect');
@@ -156,7 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const dbJobs = await fetchJobOpenings();
         if (Array.isArray(dbJobs) && dbJobs.length > 0) {
-          allJobs = dbJobs;
+          allJobs = dbJobs.map(dbJob => {
+            const localMatch = allJobs.find(lj => lj.id === dbJob.id);
+            return {
+              ...dbJob,
+              positions: (dbJob.positions && dbJob.positions > 1) 
+                ? dbJob.positions 
+                : (localMatch?.positions || dbJob.positions || 1)
+            };
+          });
           if (typeof saveStoredJobs === 'function') saveStoredJobs(allJobs);
         }
       } catch (err) {
@@ -177,17 +186,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = '';
     allJobs.forEach(job => {
+      const positionsCount = Number(job.positions) || 1;
+      const positionsBadge = positionsCount > 1 ? `${positionsCount} Openings` : '1 Opening';
+
       html += `
         <div class="job-admin-row">
           <div style="flex: 1; min-width: 0;">
             <div style="font-weight: 700; color: #0f172a; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
               ${escapeHtml(job.title)}
             </div>
-            <div style="font-size: 0.82rem; color: #64748b; margin-top: 3px;">
+            <div style="font-size: 0.82rem; color: #64748b; margin-top: 3px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
               <span style="color: #2563eb; font-weight: 600;">${escapeHtml(job.department)}</span> &bull; 
-              ${escapeHtml(job.location)} &bull; 
+              <span style="background: #fff7ed; color: #c2410c; padding: 1px 7px; border-radius: 4px; font-weight: 700; font-size: 0.78rem; border: 1px solid #fed7aa;">${positionsBadge}</span> &bull;
+              <span>${escapeHtml(job.location)}</span> &bull; 
               <code>${escapeHtml(job.id)}</code> &bull; 
-              ${escapeHtml(job.salary || 'As per norms')}
+              <span>${escapeHtml(job.salary || 'As per norms')}</span>
             </div>
           </div>
           <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
@@ -245,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetForm() {
     if (jobOpeningForm) jobOpeningForm.reset();
     if (editOpeningId) editOpeningId.value = '';
+    if (jobPositionsInput) jobPositionsInput.value = '1';
     if (formModeHeading) formModeHeading.innerText = 'Create New Job Vacancy';
     if (editingIndicator) editingIndicator.style.display = 'none';
     if (saveOpeningBtn) saveOpeningBtn.innerText = 'Publish Job Opening to Supabase';
@@ -264,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     switchTab('post');
     if (editOpeningId) editOpeningId.value = job.id;
     if (jobTitleInput) jobTitleInput.value = job.title || '';
+    if (jobPositionsInput) jobPositionsInput.value = job.positions || 1;
     if (jobDeptSelect) jobDeptSelect.value = job.department || 'IT & Software Development';
     if (jobLocInput) jobLocInput.value = job.location || 'Pune';
     if (jobTypeSelect) jobTypeSelect.value = job.type || 'Full-time';
@@ -287,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const editId = (editOpeningId?.value || '').trim();
       const title = (jobTitleInput?.value || '').trim();
+      const positions = parseInt(jobPositionsInput?.value, 10) || 1;
       const dept = (jobDeptSelect?.value || 'IT & Software Development').trim();
       const loc = (jobLocInput?.value || 'Pune').trim();
       const type = (jobTypeSelect?.value || 'Full-time').trim();
@@ -313,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
           allJobs[index] = {
             ...allJobs[index],
             title,
+            positions,
             department: dept,
             location: loc,
             type,
@@ -332,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
         targetJob = {
           id: newId,
           title,
+          positions,
           department: dept,
           location: loc,
           type,
@@ -368,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formFeedback.style.background = '#f0fdf4';
         formFeedback.style.color = '#15803d';
         formFeedback.style.border = '1px solid #bbf7d0';
-        formFeedback.innerHTML = `✓ Job <strong>"${escapeHtml(targetJob.title)}"</strong> was successfully ${editId ? 'updated' : 'published'} in Supabase database!`;
+        formFeedback.innerHTML = `✓ Job <strong>"${escapeHtml(targetJob.title)}"</strong> (${targetJob.positions > 1 ? `${targetJob.positions} Openings` : '1 Opening'}) was successfully ${editId ? 'updated' : 'published'} in Supabase database!`;
       }
 
       renderOpeningsList();

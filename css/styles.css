@@ -910,19 +910,86 @@ p {
   margin-bottom: 8px;
 }
 
-.job-card-title {
+.job-card-title, .job-title {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--color-dark);
+  margin-bottom: 8px;
+  line-height: 1.35;
 }
 
-.job-card-meta {
+.job-department-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  background-color: #F1F5F9;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  margin-bottom: 8px;
+}
+
+.job-urgent-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #DC2626;
+  background-color: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.job-card-meta, .job-meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px 12px;
   font-size: 13px;
   color: var(--color-text-muted);
   margin-bottom: 14px;
+  align-items: center;
+}
+
+.job-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748B;
+  font-size: 0.82rem;
+}
+
+.job-meta-item.positions-tag {
+  background-color: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FFEDD5;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.job-meta-item.salary-tag {
+  color: #166534;
+  font-weight: 600;
+}
+
+.job-brief-desc {
+  font-size: 0.92rem;
+  color: var(--color-text-body);
+  line-height: 1.55;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.job-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 12px;
 }
 
 .job-card-body {
