@@ -3,8 +3,9 @@
  * 
  * Features:
  * 1. Dynamically fetches verified active job openings from Supabase database (`job_openings`).
- * 2. Real-time filtering by keyword, location, department, and job type.
- * 3. Secure candidate application modal that saves incoming applications to Supabase (`job_applications`)
+ * 2. Executive real-time search & filtering with popular sector pills.
+ * 3. Elevated recruitment card UI with vacancies badges, tech stack tags, and salary chips.
+ * 4. Secure candidate application modal that saves incoming applications to Supabase (`job_applications`)
  *    and launches WhatsApp / Email with pre-filled application details.
  */
 
@@ -19,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const locationFilter = document.getElementById('filterLocation');
   const departmentFilter = document.getElementById('filterDepartment');
   const typeFilter = document.getElementById('filterType');
+  const searchSubmitBtn = document.getElementById('searchSubmitBtn');
+  const quickPills = document.querySelectorAll('.quick-pill');
 
   // DOM Elements - Candidate Application Modal
   const applyModal = document.getElementById('jobApplyModal') || document.getElementById('jobDetailModal');
@@ -32,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const applyModalStatus = document.getElementById('applyModalStatus');
 
   let currentFilteredJobs = [...allJobs];
+  let filterUrgentOnly = false;
 
   // --------------------------------------------------------------------------
   // 1. Render Job Listings on Public Board
@@ -41,11 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (jobsToRender.length === 0) {
       jobListContainer.innerHTML = `
-        <div class="empty-jobs-box" style="text-align: center; padding: 3rem 1.5rem; background: var(--color-surface, #ffffff); border-radius: 12px; border: 1px dashed var(--color-border, #cbd5e1); grid-column: 1 / -1;">
-          <svg class="ui-icon ui-icon-lg" style="margin: 0 auto 1rem; color: #94a3b8;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-          <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--color-text-main, #0f172a); margin-bottom: 0.5rem;">No job openings found matching your criteria</h4>
-          <p style="color: var(--color-text-muted, #64748b); font-size: 0.95rem; max-width: 450px; margin: 0 auto 1.25rem;">Try clearing filters or search for other keywords, or submit your resume directly below to our talent pool.</p>
-          <button class="btn btn-outline btn-sm" id="clearAllFiltersBtn">Clear All Filters</button>
+        <div class="empty-jobs-box" style="text-align: center; padding: 3.5rem 1.5rem; background: #ffffff; border-radius: 14px; border: 1px dashed #cbd5e1; grid-column: 1 / -1; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+          <svg class="ui-icon ui-icon-lg" style="margin: 0 auto 1rem; color: #94a3b8; width: 44px; height: 44px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">No active openings match your exact criteria</h4>
+          <p style="color: #64748b; font-size: 0.95rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.6;">Try clearing your filters or search keywords, or submit your resume directly below to our talent pool for immediate recruiter matching.</p>
+          <button class="btn btn-outline btn-sm" id="clearAllFiltersBtn" style="font-weight: 600;">Clear All Filters</button>
         </div>
       `;
       const clearBtn = document.getElementById('clearAllFiltersBtn');
@@ -58,58 +62,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = '';
     jobsToRender.forEach(job => {
-      const isTech = job.department && (job.department.toLowerCase().includes('it') || job.department.toLowerCase().includes('software'));
+      const deptLower = (job.department || '').toLowerCase();
+      let deptClass = 'dept-other';
+      if (deptLower.includes('it') || deptLower.includes('software')) deptClass = 'dept-it';
+      else if (deptLower.includes('embedded') || deptLower.includes('engineering')) deptClass = 'dept-eng';
+      else if (deptLower.includes('mfg') || deptLower.includes('manufacturing') || deptLower.includes('tooling')) deptClass = 'dept-mfg';
+      else if (deptLower.includes('quality') || deptLower.includes('qa')) deptClass = 'dept-qa';
+
       const positions = Number(job.positions) || 1;
       const positionsText = positions > 1 ? `${positions} Openings` : '1 Opening';
+      const skills = Array.isArray(job.skills) && job.skills.length > 0 ? job.skills : [];
 
       html += `
-        <div class="job-card" data-job-id="${escapeHtml(job.id)}">
-          <div class="job-card-header">
-            <div>
-              <div class="job-department-tag" style="${isTech ? 'background: #eff6ff; color: #2563eb; border-color: #bfdbfe;' : ''}">
-                ${escapeHtml(job.department)}
-              </div>
-              <h3 class="job-title">${escapeHtml(job.title)}</h3>
+        <article class="job-card" data-job-id="${escapeHtml(job.id)}">
+          <div class="job-card-top-row">
+            <span class="job-dept-chip ${deptClass}">
+              ${escapeHtml(job.department)}
+            </span>
+            <div class="job-badges-group">
+              ${job.urgent ? `
+                <span class="job-urgent-pill" title="Immediate client requirement">
+                  Urgent Requirement
+                </span>` : ''}
+              <span class="job-vacancies-pill" title="${positions} verified open positions">
+                <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:12px;height:12px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                ${positionsText}
+              </span>
             </div>
-            ${job.urgent ? `<span class="job-urgent-badge">Urgent Hiring</span>` : ''}
           </div>
 
-          <div class="job-meta-row">
-            <span class="job-meta-item positions-tag" title="${positions} open vacancies">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              ${positionsText}
-            </span>
-            <span class="job-meta-item">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              ${escapeHtml(job.location)}
-            </span>
-            <span class="job-meta-item">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <h3 class="job-card-title">${escapeHtml(job.title)}</h3>
+          <div class="job-company-location">
+            <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Client Partner &bull; ${escapeHtml(job.location)}</span>
+          </div>
+
+          <div class="job-specs-grid">
+            <span class="job-spec-pill">
               ${escapeHtml(job.type || 'Full-time')}
             </span>
-            <span class="job-meta-item">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="job-spec-pill">
               ${escapeHtml(job.experience || 'Mid Level')}
             </span>
             ${job.salary ? `
-            <span class="job-meta-item salary-tag">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3a4 4 0 0 0 0-8"/></svg>
+            <span class="job-spec-pill salary-pill">
               ${escapeHtml(job.salary)}
             </span>` : ''}
           </div>
 
-          <p class="job-brief-desc">${escapeHtml(job.description)}</p>
+          ${skills.length > 0 ? `
+          <div class="job-skills-list">
+            ${skills.map(s => `<span class="job-skill-chip">${escapeHtml(s)}</span>`).join('')}
+          </div>` : ''}
+
+          <p class="job-card-desc">${escapeHtml(job.description)}</p>
 
           <div class="job-card-actions">
-            <button class="btn btn-primary btn-sm view-job-btn" data-job-id="${escapeHtml(job.id)}">
-              View Details &amp; Apply
+            <button class="btn-job-apply view-job-btn" data-job-id="${escapeHtml(job.id)}">
+              Apply for Position
             </button>
-            <a href="https://wa.me/918805521152?text=Hello%20Shivtej%20Placement%20Team%2C%20I%20am%20interested%20in%20applying%20for%20${encodeURIComponent(job.title)}%20(Ref%3A%20${encodeURIComponent(job.id)})" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm job-wa-btn" style="display:inline-flex; align-items:center; gap:0.4rem;">
-              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-              WhatsApp Apply
+            <a href="https://wa.me/918805521152?text=Hello%20Shivtej%20Placement%20Team%2C%20I%20am%20interested%20in%20applying%20for%20${encodeURIComponent(job.title)}%20(Ref%3A%20${encodeURIComponent(job.id)})" target="_blank" rel="noopener noreferrer" class="btn-job-whatsapp" title="Inquire via WhatsApp">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+              WhatsApp
             </a>
           </div>
-        </div>
+              WhatsApp
+            </a>
+          </div>
+        </article>
       `;
     });
 
@@ -131,14 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const dbJobs = await fetchJobOpenings();
         if (Array.isArray(dbJobs) && dbJobs.length > 0) {
-          // Merge with any active local jobs to preserve positions if database column is pending
           allJobs = dbJobs.map(dbJob => {
             const localMatch = allJobs.find(lj => lj.id === dbJob.id);
             return {
               ...dbJob,
-              positions: (dbJob.positions && dbJob.positions > 1) 
-                ? dbJob.positions 
-                : (localMatch?.positions || dbJob.positions || 1)
+              skills: (Array.isArray(dbJob.skills) && dbJob.skills.length > 0) ? dbJob.skills : (localMatch?.skills || []),
+              positions: (dbJob.positions && Number(dbJob.positions) > 0) 
+                ? Number(dbJob.positions) 
+                : (localMatch?.positions || 1)
             };
           });
           if (typeof saveStoredJobs === 'function') {
@@ -168,18 +188,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = (job.title || '').toLowerCase();
       const desc = (job.description || '').toLowerCase();
       const department = (job.department || '').toLowerCase();
-      const location = job.location || '';
+      const location = (job.location || '').toLowerCase();
+      const skillsStr = Array.isArray(job.skills) ? job.skills.join(' ').toLowerCase() : '';
 
       const matchQuery = !query ||
         title.includes(query) ||
         desc.includes(query) ||
-        department.includes(query);
+        department.includes(query) ||
+        skillsStr.includes(query);
 
-      const matchLoc = !loc || location.includes(loc);
+      const matchLoc = !loc || location.includes(loc.toLowerCase());
       const matchDept = !dept || job.department === dept;
       const matchType = !type || job.type === type;
+      const matchUrgent = !filterUrgentOnly || Boolean(job.urgent);
 
-      return matchQuery && matchLoc && matchDept && matchType;
+      return matchQuery && matchLoc && matchDept && matchType && matchUrgent;
     });
 
     renderJobs(currentFilteredJobs);
@@ -190,6 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (locationFilter) locationFilter.value = '';
     if (departmentFilter) departmentFilter.value = '';
     if (typeFilter) typeFilter.value = '';
+    filterUrgentOnly = false;
+
+    quickPills.forEach(p => p.classList.remove('active'));
+    const defaultAllPill = document.querySelector('.quick-pill[data-dept=""]');
+    if (defaultAllPill) defaultAllPill.classList.add('active');
+
     applyFilters();
   }
 
@@ -197,6 +226,35 @@ document.addEventListener('DOMContentLoaded', () => {
   if (locationFilter) locationFilter.addEventListener('change', applyFilters);
   if (departmentFilter) departmentFilter.addEventListener('change', applyFilters);
   if (typeFilter) typeFilter.addEventListener('change', applyFilters);
+
+  if (searchSubmitBtn) {
+    searchSubmitBtn.addEventListener('click', () => {
+      applyFilters();
+      const target = document.getElementById('jobsResultsSection') || jobListContainer;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // Quick Filter Pills Event Listeners
+  quickPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      quickPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      if (pill.dataset.urgent === 'true') {
+        filterUrgentOnly = true;
+        if (departmentFilter) departmentFilter.value = '';
+      } else {
+        filterUrgentOnly = false;
+        const targetDept = pill.dataset.dept || '';
+        if (departmentFilter) departmentFilter.value = targetDept;
+      }
+
+      applyFilters();
+    });
+  });
 
   // --------------------------------------------------------------------------
   // 4. Candidate Application Modal System

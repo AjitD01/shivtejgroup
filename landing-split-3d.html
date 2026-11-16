@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shivtej Group &ndash; Precision Foam Manufacturing &amp; Technical Workforce Recruitment</title>
+  <meta name="description" content="Shivtej Group operates two specialized divisions: Shivtej Industries (custom foam sheets, die-cut gaskets, and insulation packaging) and Shivtej Placement Services (IT staffing, engineering recruitment, and manpower solutions in Pune).">
+  
+  <link rel="icon" type="image/png" href="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Space Grotesk', var(--font-main);
+      
+      /* Authentic Shivtej Group Brand Colors */
+      --color-terracotta: #F6874F;
+      --color-terracotta-hover: #E26F32;
+      --color-slate-dark: #0F172A;
+      --color-slate-surface: #1E293B;
+      --color-navy-dark: #0A192F;
+      --color-navy-surface: #172A45;
+      --color-blue-accent: #2563EB;
+      --color-blue-light: #60A5FA;
+      --color-text-main: #0F172A;
+      --color-text-muted: #64748B;
+      --color-text-light: #F8FAFC;
+      --color-bg-light: #F8FAFC;
+      --color-bg-white: #FFFFFF;
+      --color-border: #E2E8F0;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --transition-spring: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--color-bg-light);
+      color: var(--color-text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* CLEAN CORPORATE HEADER */
+    .gateway-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+    }
+    .gateway-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gateway-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .gateway-logo {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .gateway-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      font-size: 0.9rem;
+    }
+    .gateway-location {
+      color: #64748B;
+      font-weight: 500;
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .gateway-location { display: inline-block; }
+    }
+    .gateway-phone {
+      color: #0F172A;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .gateway-phone:hover {
+      color: var(--color-terracotta);
+    }
+    .gateway-link {
+      color: #334155;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .gateway-link:hover {
+      color: var(--color-terracotta);
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn-terracotta {
+      background: var(--color-terracotta);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(246, 135, 79, 0.35);
+    }
+    .btn-terracotta:hover {
+      background: var(--color-terracotta-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(246, 135, 79, 0.45);
+      color: #ffffff;
+    }
+    .btn-navy {
+      background: var(--color-blue-accent);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+    .btn-navy:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+      color: #ffffff;
+    }
+    .btn-outline-white {
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    }
+    .btn-outline-white:hover {
+      background: #F1F5F9;
+      color: #0F172A;
+      border-color: #94A3B8;
+      transform: translateY(-2px);
+    }
+
+    /* ========================================================================
+       50/50 REALISTIC INTERACTIVE SPLIT HERO (LIGHT & BRIGHT DUAL-TONE)
+       ======================================================================== */
+    .split-hero-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: calc(100vh - 75px);
+      display: flex;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+
+    .hero-wing {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4.5rem 4rem 3.5rem;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    /* REALISTIC PHOTOGRAPHIC BACKGROUNDS WITH PHYSICAL OVERLAYS */
+    .wing-bg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+      z-index: 1;
+    }
+
+    .hero-wing:hover .wing-bg-layer {
+      transform: scale(1.04);
+    }
+
+    .hero-wing-manufacturing .wing-bg-layer {
+      background-image: url('assets/images/hero-manufacturing-real.jpg');
+    }
+    .hero-wing-recruitment .wing-bg-layer {
+      background-image: url('assets/images/hero-recruiting-real.jpg');
+    }
+
+    .wing-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      transition: background 0.4s ease;
+    }
+
+    .hero-wing-manufacturing .wing-overlay {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 250, 245, 0.90) 55%, rgba(254, 215, 170, 0.65) 100%);
+      border-right: 1px solid #E2E8F0;
+    }
+    .hero-wing-manufacturing:hover .wing-overlay {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 247, 237, 0.84) 55%, rgba(253, 186, 116, 0.58) 100%);
+    }
+
+    .hero-wing-recruitment .wing-overlay {
+      background: linear-gradient(225deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.90) 55%, rgba(191, 219, 254, 0.65) 100%);
+      border-left: 1px solid #E2E8F0;
+    }
+    .hero-wing-recruitment:hover .wing-overlay {
+      background: linear-gradient(225deg, rgba(255, 255, 255, 0.90) 0%, rgba(240, 249, 255, 0.84) 55%, rgba(147, 197, 253, 0.58) 100%);
+    }
+
+    /* WING CONTENT */
+    .wing-content {
+      position: relative;
+      z-index: 3;
+      max-width: 540px;
+    }
+
+    .wing-division-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-manufacturing {
+      background: #FFF7ED;
+      color: #C2410C;
+      border: 1px solid #FDBA74;
+    }
+    .badge-recruitment {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #BFDBFE;
+    }
+
+    .wing-title {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #0F172A;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .wing-title span.accent-orange {
+      color: #EA580C;
+    }
+    .wing-title span.accent-blue {
+      color: #2563EB;
+    }
+
+    .wing-summary {
+      font-size: 1.05rem;
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* REALISTIC PHYSICAL SAMPLE CARDS IN HERO */
+    .hero-3d-sample-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+      transform: translateY(0);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      will-change: transform;
+    }
+
+    .hero-wing:hover .hero-3d-sample-card {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+    }
+    .hero-wing-manufacturing:hover .hero-3d-sample-card {
+      border-color: #FDBA74;
+    }
+    .hero-wing-recruitment:hover .hero-3d-sample-card {
+      border-color: #93C5FD;
+    }
+
+    .sample-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .sample-thumb {
+      width: 76px;
+      height: 76px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      border: 2px solid #E2E8F0;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    .sample-info h5 {
+      color: #0F172A;
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .sample-info p {
+      color: #64748B;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .sample-pill-group {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .sample-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #F1F5F9;
+      color: #334155;
+      border: 1px solid #E2E8F0;
+    }
+    .sample-pill.pill-orange {
+      background: #FFF7ED;
+      color: #C2410C;
+      border-color: #FED7AA;
+    }
+    .sample-pill.pill-blue {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border-color: #BFDBFE;
+    }
+
+    /* REAL METRICS ROW */
+    .wing-metrics {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #E2E8F0;
+    }
+    .metric-col h4 {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #0F172A;
+      line-height: 1;
+    }
+    .metric-col p {
+      font-size: 0.78rem;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
+
+    .wing-action-row {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    .unified-footer {
+      background: var(--color-slate-dark);
+      color: #94A3B8;
+      padding: 4rem 1.5rem 2rem;
+    }
+    .footer-grid {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-col h5 {
+      color: #FFFFFF;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .footer-col p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-col ul a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--color-terracotta);
+    }
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .split-hero-wrapper {
+        flex-direction: column;
+        height: auto;
+      }
+      .hero-wing {
+        padding: 3rem 1.5rem;
+      }
+      .center-split-divider {
+        display: none;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .wing-title {
+        font-size: 2.1rem;
+      }
+      .wing-metrics {
+        gap: 1.25rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CLEAN CORPORATE HEADER -->
+  <header class="gateway-header">
+    <div class="gateway-header-inner">
+      <a href="index.html" class="gateway-brand" title="Shivtej Group">
+        <img src="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png" alt="Shivtej Group" class="gateway-logo">
+      </a>
+
+      <div class="gateway-meta-right">
+        <span class="gateway-location">📍 MIDC Bhosari &amp; Chikhli, Pune</span>
+        <a href="tel:+918805521152" class="gateway-phone">📞 +91 8805521152</a>
+        <a href="about.html" class="gateway-link">About Group</a>
+        <a href="contact.html" class="gateway-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       SHIVTEJ GROUP: TWO CORE OPERATING DIVISIONS
+       ======================================================================== -->
+  <section class="split-hero-wrapper" id="splitHeroSection">
+
+    <!-- DIVISION 01: SHIVTEJ INDUSTRIES (Foam Manufacturing) -->
+    <div class="hero-wing hero-wing-manufacturing" id="wingManufacturing" onclick="window.location.href='industries.html'">
+      <div class="wing-bg-layer"></div>
+      <div class="wing-overlay"></div>
+      
+      <div class="wing-content">
+        <div class="wing-division-badge badge-manufacturing">
+          Division 01 &bull; Manufacturing
+        </div>
+        
+        <h1 class="wing-title">
+          Shivtej <span class="accent-orange">Industries</span>
+        </h1>
+        
+        <p class="wing-summary">
+          Custom foam sheets, precision die-cut gaskets, insulation packaging, and automotive sealing components engineered at our Chikhli plant since 2007.
+        </p>
+
+        <!-- Real 3D Physical Sample Card (Grounded Material Sample) -->
+        <div class="hero-3d-sample-card" id="sampleCardMfg">
+          <div class="sample-card-inner">
+            <img src="assets/images/die-cut-gasket-real-square.jpg" alt="Die-cut Rubber and Foam Gaskets Sample" class="sample-thumb">
+            <div class="sample-info">
+              <h5>Custom Die-Cut Foam Gasket</h5>
+              <p>EPDM / EVA 45 Shore &bull; ±0.1mm CNC Tolerance &bull; Automotive Grade</p>
+              <div class="sample-pill-group">
+                <span class="sample-pill pill-orange">Weatherproof Seal</span>
+                <span class="sample-pill">Vibration Damping</span>
+                <span class="sample-pill">RoHS Compliant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wing-metrics">
+          <div class="metric-col">
+            <h4>15+</h4>
+            <p>Years Plant Track Record</p>
+          </div>
+          <div class="metric-col">
+            <h4>50+</h4>
+            <p>OEM &amp; Tier-1 Clients</p>
+          </div>
+          <div class="metric-col">
+            <h4>100%</h4>
+            <p>Custom Tooling</p>
+          </div>
+        </div>
+
+        <div class="wing-action-row" onclick="event.stopPropagation();">
+          <a href="industries.html" class="btn btn-terracotta">Enter Shivtej Industries &rarr;</a>
+          <a href="contact.html" class="btn btn-outline-white">Request Material Quote</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIVISION 02: SHIVTEJ PLACEMENT SERVICES (HR & Recruitment) -->
+    <div class="hero-wing hero-wing-recruitment" id="wingRecruitment" onclick="window.location.href='jobs.html'">
+      <div class="wing-bg-layer"></div>
+      <div class="wing-overlay"></div>
+
+      <div class="wing-content">
+        <div class="wing-division-badge badge-recruitment">
+          Division 02 &bull; Recruitment
+        </div>
+
+        <h2 class="wing-title">
+          Shivtej <span class="accent-blue">Placement</span>
+        </h2>
+
+        <p class="wing-summary">
+          Specialized IT talent, software developers, CNC machinists, and industrial plant workforce across Pune, PCMC, and Western India.
+        </p>
+
+        <!-- Real 3D Physical Sample Card (Live Candidate / Job Sample) -->
+        <div class="hero-3d-sample-card" id="sampleCardHR">
+          <div class="sample-card-inner">
+            <img src="assets/images/types-of-engineering-AGBb4vzzbZIVb86g.webp" alt="Engineering Team" class="sample-thumb">
+            <div class="sample-info">
+              <h5>Verified Technical Talent Pool</h5>
+              <p>Full Stack &bull; Python/AI &bull; QA &bull; CNC Operators &bull; Plant Supervisors</p>
+              <div class="sample-pill-group">
+                <span class="sample-pill pill-blue">10 Live Openings</span>
+                <span class="sample-pill pill-orange">4 Developers Open</span>
+                <span class="sample-pill">0 Fees for Candidates</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wing-metrics">
+          <div class="metric-col">
+            <h4>10+</h4>
+            <p>Active Job Vacancies</p>
+          </div>
+          <div class="metric-col">
+            <h4>1,200+</h4>
+            <p>Placed Professionals</p>
+          </div>
+          <div class="metric-col">
+            <h4>0 Fees</h4>
+            <p>Direct Employer Hiring</p>
+          </div>
+        </div>
+
+        <div class="wing-action-row" onclick="event.stopPropagation();">
+          <a href="jobs.html" class="btn btn-navy">Enter Shivtej Placement &rarr;</a>
+          <a href="jobs.html#hire" class="btn btn-outline-white">Hire Technical Manpower</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- COMMON FOOTER -->
+  <footer class="unified-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png" alt="Shivtej Group" style="height: 38px; background: #ffffff; padding: 3px 8px; border-radius: 4px; margin-bottom: 1.25rem;">
+        <p>
+          Founded in 2007, <strong>Shivtej Group</strong> operates two dedicated divisions: <strong>Shivtej Industries</strong> (precision foam products, die-cut gaskets, and insulation packaging) and <strong>Shivtej Placement Services</strong> (IT technical recruitment and industrial workforce staffing).
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Manufacturing Division</h5>
+        <ul>
+          <li><a href="industries.html">Shivtej Industries Portal</a></li>
+          <li><a href="products.html">EPDM Foam Sheets</a></li>
+          <li><a href="products.html">Precision Die-Cut Gaskets</a></li>
+          <li><a href="products.html">Industrial Foam Tapes</a></li>
+          <li><a href="contact.html">Request Material Quote</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Workforce Division</h5>
+        <ul>
+          <li><a href="jobs.html">Active Job Openings</a></li>
+          <li><a href="hr-placement.html">IT &amp; Software Recruitment</a></li>
+          <li><a href="hr-placement.html">Engineering Manpower</a></li>
+          <li><a href="hr-placement.html">Payroll Compliance</a></li>
+          <li><a href="jobs.html#talentPoolSection">Candidate Talent Pool</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact &amp; Operations</h5>
+        <p style="margin-bottom: 0.5rem;"><strong>Plant:</strong> Chikhli &amp; Bhosari MIDC, Pune, Maharashtra 411062</p>
+        <p style="margin-bottom: 0.5rem;"><strong>Phone:</strong> <a href="tel:+918805521152" style="color: #FFA573; text-decoration: none;">+91 8805521152</a></p>
+        <p><strong>Email:</strong> <a href="mailto:shivtejentp1575@gmail.com" style="color: #E2E8F0; text-decoration: none;">shivtejentp1575@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 Shivtej Group. All rights reserved. Registered Enterprise, Maharashtra, India.</div>
+      <div>Precision Manufacturing &bull; Technical Workforce Recruitment</div>
+    </div>
+  </footer>
+
+</body>
+</html>

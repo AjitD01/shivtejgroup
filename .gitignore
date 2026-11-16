@@ -3,6 +3,7 @@ node_modules/
 
 # Dev / audit artifacts (not part of the deployed site)
 screenshots/
+scratch/
 audit_report.json
 audit_ui.js
 deep_playwright_explorer.js

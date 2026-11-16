@@ -25,9 +25,8 @@
           <span>Bhosari &amp; PCMC, Maharashtra</span>
         </div>
         <div class="top-bar-item hide-mobile">
-          <span class="live-pulse-badge">
-            <span class="pulse-dot"></span>
-            IT &amp; Industrial Roles Open
+          <span style="font-weight: 500; color: #64748b;">
+            Recruitment &amp; Staffing Division &bull; Zero Candidate Fees
           </span>
         </div>
       </div>
@@ -44,17 +43,14 @@
   <header class="site-header">
     <div class="container">
       <nav class="navbar" aria-label="Main Navigation">
-        <a href="index.html" class="brand-logo" title="Shivtej Group">
-          <img src="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png" alt="Shivtej Group Logo" width="215" height="52">
+        <a href="index.html" class="brand-logo" title="Back to Shivtej Group Gateway">
+          <img src="assets/images/shivtej_logo-mk3J98pQo9izyx3r.png" alt="Shivtej Placement Services Logo" width="215" height="52">
         </a>
 
         <ul class="nav-menu" id="navMenu">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
-          <li><a href="products.html" class="nav-link">Products</a></li>
-          <li><a href="hr-placement.html" class="nav-link">HR &amp; Placement</a></li>
           <li><a href="jobs.html" class="nav-link active">Job Openings</a></li>
-          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="hr-placement.html" class="nav-link">Staffing Services</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Recruiter</a></li>
         </ul>
 
         <div class="nav-actions">
@@ -70,77 +66,147 @@
   </header>
 
   <main>
-    <!-- Jobs Banner -->
-    <div class="page-hero">
+    <!-- Professional Corporate Hero & Search Console -->
+    <section class="placement-hero">
       <div class="container">
-        <h1>Latest Job Openings Across India</h1>
-        <p>Discover genuine, verified career opportunities with top IT, software, manufacturing, and engineering partners.</p>
-      </div>
-    </div>
+        <div class="placement-hero-content">
+          <span class="agency-lead-badge">Shivtej Placement Services &bull; Recruitment &amp; Workforce Solutions</span>
+          <h1 class="placement-hero-title">Career Opportunities &amp; Technical Staffing</h1>
+          <p class="placement-hero-subtitle">
+            Direct candidate placement with pre-screened IT, engineering, and manufacturing employers across Pune, PCMC, and Maharashtra. Zero fees for candidates.
+          </p>
+        </div>
 
-    <!-- JOB SEARCH & FILTER SECTION -->
-    <section class="section-padding bg-white" style="padding-top: 2.5rem;">
-      <div class="container">
-        
-        <!-- Live Filter Bar -->
-        <div class="jobs-filter-panel">
-          <div class="filter-grid-row">
-            
-            <div class="search-input-wrap">
+        <!-- Grounded Enterprise Search Console -->
+        <div class="placement-search-console">
+          <div class="search-console-row">
+            <div class="search-field-group">
               <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" id="jobSearchInput" placeholder="Search by job title, skill (React, QA, Supervisor)..." aria-label="Search jobs">
+              <input type="text" id="jobSearchInput" placeholder="Job title, key skill (React, Embedded, CNC, QA)..." aria-label="Search jobs">
             </div>
 
-            <div>
-              <select id="filterLocation" class="filter-select" aria-label="Filter by Location">
+            <div class="search-field-group">
+              <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <select id="filterLocation" aria-label="Filter by Location">
                 <option value="">All Locations</option>
-                <option value="Pune">Pune / PCMC</option>
+                <option value="Pune">Pune &amp; PCMC (All)</option>
+                <option value="Hinjawadi">Hinjawadi / Wakad</option>
+                <option value="Bhosari">Bhosari MIDC</option>
                 <option value="Chikhli">Chikhli, Pune</option>
-                <option value="Bhosari">Bhosari, Pune</option>
-                <option value="Wakad">Wakad / Hinjawadi</option>
                 <option value="Nashik">Nashik</option>
                 <option value="Bangalore">Bangalore</option>
-                <option value="Remote">Work from Home / Remote</option>
+                <option value="Remote">Remote / Work from Home</option>
               </select>
             </div>
 
-            <div>
-              <select id="filterDepartment" class="filter-select" aria-label="Filter by Department">
-                <option value="">All Departments</option>
+            <div class="search-field-group">
+              <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <select id="filterDepartment" aria-label="Filter by Department">
+                <option value="">All Disciplines</option>
                 <option value="IT & Software Development">IT &amp; Software Development</option>
                 <option value="Engineering & Embedded Tech">Engineering &amp; Embedded Tech</option>
                 <option value="Manufacturing Operations">Manufacturing Operations</option>
                 <option value="Quality Engineering">Quality Engineering</option>
                 <option value="Sales & Marketing">Sales &amp; Marketing</option>
                 <option value="Human Resources">Human Resources</option>
-                <option value="Facility Management">Facility Management</option>
                 <option value="Tooling & Fabrication">Tooling &amp; Fabrication</option>
               </select>
             </div>
 
-            <div>
-              <select id="filterType" class="filter-select" aria-label="Filter by Job Type">
+            <div class="search-field-group">
+              <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <select id="filterType" aria-label="Filter by Job Type">
                 <option value="">All Job Types</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Contract">Contract</option>
-                <option value="Temporary">Temporary</option>
               </select>
             </div>
 
+            <button class="search-action-btn" id="searchSubmitBtn">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <span>Search Positions</span>
+            </button>
+          </div>
+
+          <!-- Sector Filter Tabs (Clean Corporate Style, No Emojis) -->
+          <div class="quick-filter-pills-row">
+            <span class="quick-filter-label">Departments:</span>
+            <div class="quick-pills-track">
+              <button class="quick-pill active" data-dept="">All Positions (8)</button>
+              <button class="quick-pill" data-dept="IT & Software Development">IT &amp; Software (2)</button>
+              <button class="quick-pill" data-dept="Engineering & Embedded Tech">Embedded Systems (1)</button>
+              <button class="quick-pill" data-dept="Manufacturing Operations">Manufacturing Operations (2)</button>
+              <button class="quick-pill" data-dept="Quality Engineering">Quality Control (1)</button>
+              <button class="quick-pill" data-dept="Sales & Marketing">Sales &amp; Accounts (1)</button>
+              <button class="quick-pill" data-urgent="true">Urgent Openings (4)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Staffing Agency Trust Ribbon (Clean Unified Palette) -->
+    <section class="staffing-trust-ribbon">
+      <div class="container">
+        <div class="trust-metrics-grid">
+          <div class="trust-metric-card">
+            <div class="metric-icon-wrap">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="metric-text">
+              <h4>Zero Candidate Fees</h4>
+              <p>100% Free Placement &bull; No registration or service charges</p>
+            </div>
+          </div>
+          <div class="trust-metric-card">
+            <div class="metric-icon-wrap">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            </div>
+            <div class="metric-text">
+              <h4>Direct Screening</h4>
+              <p>Direct interview coordination with client hiring managers</p>
+            </div>
+          </div>
+          <div class="trust-metric-card">
+            <div class="metric-icon-wrap">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="metric-text">
+              <h4>1,200+ Placements</h4>
+              <p>Engineers, developers &amp; supervisors across Maharashtra</p>
+            </div>
+          </div>
+          <div class="trust-metric-card">
+            <div class="metric-icon-wrap">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <div class="metric-text">
+              <h4>150+ Hiring Clients</h4>
+              <p>Tier-1 Auto OEMs, IT centers &amp; industrial manufacturers</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOB SEARCH & RESULTS SECTION -->
+    <section class="section-padding bg-white" id="jobsResultsSection" style="padding-top: 2.5rem;">
+      <div class="container">
+        
+        <!-- Results Toolbar -->
+        <div class="jobs-results-toolbar">
+          <h2 class="results-count-headline">
+            Verified Active Vacancies <span class="results-badge-num" id="jobsCountBadge">8</span>
+          </h2>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <span class="results-status-tag">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-8 9-8 9s-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg>
+              Zero Candidate Placement Fees
+            </span>
           </div>
         </div>
 
         <!-- Jobs Listing Grid Container -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-          <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--color-dark);">
-            Verified Active Vacancies (<span id="jobsCountBadge">0</span>)
-          </h3>
-          <span style="font-size: 0.9rem; color: #15803d; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
-            <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-8 9-8 9s-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg>
-            100% Free Placement &bull; Zero Fees
-          </span>
-        </div>
-
         <div id="jobsListContainer" class="jobs-grid">
           <!-- Dynamically injected via js/jobs-app.js -->
         </div>
@@ -148,23 +214,55 @@
       </div>
     </section>
 
+    <!-- CORPORATE STAFFING SECTION (FOR EMPLOYERS) -->
+    <section class="employer-staffing-banner">
+      <div class="container">
+        <div class="employer-banner-card">
+          <div class="employer-banner-body">
+            <span class="employer-badge">For Corporate Employers &amp; HR Departments</span>
+            <h3>Workforce &amp; Technical Staffing for Employers</h3>
+            <p>
+              Shivtej Placement Services supplies vetted Full-Stack Developers, Embedded Engineers, Plant Supervisors, and Contract Workforce within 48 to 72 hours across Pune, PCMC, and Maharashtra.
+            </p>
+            <div class="employer-perks-row">
+              <span>Direct Pre-Screening</span>
+              <span>&bull;</span>
+              <span>48-Hour Turnaround</span>
+              <span>&bull;</span>
+              <span>100% PF &amp; Statutory Compliance</span>
+            </div>
+          </div>
+          <div class="employer-banner-actions">
+            <a href="https://wa.me/918805521152?text=Hello%20Shivtej%20Placement%20Team,%20our%20company%20is%20looking%20to%20hire%20manpower.%20Please%20share%20details." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-corporate">
+              <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+              Inquire via WhatsApp
+            </a>
+            <a href="tel:+918805521152" class="btn-phone-corporate">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call Placement Desk (+91 8805521152)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- GENERAL RESUME SUBMISSION -->
     <section class="section-padding bg-alt" id="talentPoolSection">
       <div class="container">
         
-        <div class="resume-cta-box" style="background-color: var(--color-dark-surface); border-radius: 12px; padding: 3rem 2.5rem; text-align: center; max-width: 800px; margin: 0 auto; color: var(--color-white);">
-          <span class="group-hero-tag" style="background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border-color: rgba(255, 255, 255, 0.2);">Candidate Talent Pool</span>
-          <h2 style="color: #ffffff; font-size: 2rem; font-weight: 700; margin: 1rem 0 0.75rem;">Don't See Your Specific Role?</h2>
-          <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem;">
-            Submit your resume directly to our recruitment executive team. When a matching opening arises in IT, engineering, manufacturing, or sales, we will connect with you immediately.
+        <div class="resume-cta-box" style="background-color: #ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 3rem 2.5rem; text-align: center; max-width: 800px; margin: 0 auto; color: #0f172a; box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);">
+          <span class="agency-lead-badge" style="color: #64748b;">Candidate Database</span>
+          <h2 style="color: #0f172a; font-size: 1.85rem; font-weight: 700; margin: 0.75rem 0 0.5rem;">Submit Your Resume for Upcoming Openings</h2>
+          <p style="color: #475569; font-size: 0.98rem; line-height: 1.6; margin-bottom: 1.75rem; max-width: 620px; margin-left: auto; margin-right: auto;">
+            If you do not see a position matching your current qualifications, submit your CV to our talent database. Our recruitment team will review your profile and contact you directly when matching requirements arise.
           </p>
 
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/918805521152?text=Hello%20Shivtej%20Placement%20Team,%20I%20am%20looking%20for%20job%20opportunities.%20Here%20are%20my%20details:" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background: var(--color-whatsapp); border-color: var(--color-whatsapp); display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="https://wa.me/918805521152?text=Hello%20Shivtej%20Placement%20Team,%20I%20am%20submitting%20my%20resume%20for%20upcoming%20job%20openings.%20Here%20are%20my%20details:" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-corporate" style="padding: 10px 22px; font-weight: 600;">
               <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-              Send Resume on WhatsApp
+              Submit CV via WhatsApp
             </a>
-            <a href="mailto:shivtejentp1575@gmail.com?subject=Job%20Application%20-%20General%20Talent%20Pool" class="btn btn-outline-white" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="mailto:shivtejentp1575@gmail.com?subject=Job%20Application%20-%20General%20Candidate%20Database" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 10px 22px; font-weight: 600; border-radius: 6px; border-color: #cbd5e1; color: #1e293b;">
               <svg class="ui-icon ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
               Email Your Resume
             </a>

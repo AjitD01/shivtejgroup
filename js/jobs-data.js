@@ -15,6 +15,7 @@ const DEFAULT_JOBS = [
     positions: 4,
     postedDate: "2025-03-01",
     urgent: true,
+    skills: ["React.js", "Node.js", "TypeScript", "REST APIs", "PostgreSQL", "Git"],
     description: "Shivtej Placement Services is hiring a Full Stack Developer on behalf of a leading technology client in Pune. You will build and scale web applications, APIs, and client portals.",
     responsibilities: [
       "Develop responsive, high-performance web frontends using modern JavaScript/TypeScript and React.",
@@ -39,6 +40,7 @@ const DEFAULT_JOBS = [
     positions: 2,
     postedDate: "2025-02-28",
     urgent: false,
+    skills: ["Playwright", "Selenium", "Postman", "CI/CD", "Jira", "API Testing"],
     description: "Seeking a detail-oriented QA Automation Engineer to design, script, and maintain end-to-end automated testing suites for enterprise client platforms.",
     responsibilities: [
       "Write and execute automated test scripts using Playwright, Selenium, or Cypress.",
@@ -62,6 +64,7 @@ const DEFAULT_JOBS = [
     positions: 3,
     postedDate: "2025-02-26",
     urgent: true,
+    skills: ["Embedded C/C++", "ARM Cortex", "STM32", "CAN bus", "Microcontrollers"],
     description: "Urgent opening for an Embedded Systems Engineer to develop firmware and control systems for industrial automation and automotive sensors.",
     responsibilities: [
       "Develop embedded C/C++ firmware for microcontrollers (ARM Cortex, STM32, ESP32).",
@@ -85,6 +88,7 @@ const DEFAULT_JOBS = [
     positions: 2,
     postedDate: "2025-02-25",
     urgent: true,
+    skills: ["Foam Die-Cutting", "CNC Press", "ISO 9001", "Shift Management", "5S"],
     description: "We are seeking an experienced Production Supervisor to oversee foam die-cutting, gasket fabrication, and sheet extrusion lines at our manufacturing facility in Chikhli.",
     responsibilities: [
       "Supervise daily foam cutting, laminating, and die-punching production schedules.",
@@ -109,6 +113,7 @@ const DEFAULT_JOBS = [
     positions: 3,
     postedDate: "2025-02-22",
     urgent: false,
+    skills: ["Vernier Caliper", "Micrometer", "Visual Inspection", "Six Sigma", "Documentation"],
     description: "Responsible for in-process inspection and final QA testing of precision die-cut gaskets, foam tapes, and thermal insulation pads.",
     responsibilities: [
       "Conduct visual, dimensional, and density checks using vernier calipers, micrometers, and gauges.",
@@ -132,6 +137,7 @@ const DEFAULT_JOBS = [
     positions: 4,
     postedDate: "2025-02-20",
     urgent: true,
+    skills: ["B2B Sales", "Client Acquisition", "Staffing Accounts", "Negotiation", "CRM"],
     description: "Drive corporate business growth by acquiring automotive OEM, IT client staffing, and electronics packaging clients across Maharashtra.",
     responsibilities: [
       "Identify corporate clients requiring specialized staffing, IT talent, and engineering products.",
@@ -155,6 +161,7 @@ const DEFAULT_JOBS = [
     positions: 2,
     postedDate: "2025-02-18",
     urgent: false,
+    skills: ["Payroll Processing", "PF & ESIC", "Statutory Compliance", "MS Excel", "Onboarding"],
     description: "Oversee client manpower payroll calculations, PF/ESIC statutory compliance, contractor attendance, and worker onboarding for client companies.",
     responsibilities: [
       "Process monthly payroll for 200+ contractual and permanent workforce.",
@@ -178,6 +185,7 @@ const DEFAULT_JOBS = [
     positions: 3,
     postedDate: "2025-02-15",
     urgent: false,
+    skills: ["Die Tooling", "Steel Rule Dies", "CAD Drawings", "Stamping Presses", "Sharpening"],
     description: "Fabricate, maintain, and sharpen rotary and flatbed cutting dies, wooden punch dies, and steel rule tooling for custom foam gasket shapes.",
     responsibilities: [
       "Operate die making machinery, bending tools, and rule cutting jigs.",
@@ -191,20 +199,22 @@ const DEFAULT_JOBS = [
   }
 ];
 
-// Initialize LocalStorage with default jobs if empty
+// Initialize LocalStorage with default jobs if empty or update missing skills
 function getStoredJobs() {
   const stored = localStorage.getItem('shivtej_jobs_db');
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // Only trust a well-formed, non-empty array of job objects.
       if (Array.isArray(parsed) && parsed.length && parsed.every(j => j && typeof j === 'object')) {
-        return parsed.map(j => ({
-          ...j,
-          positions: Number(j.positions) || (j.id === 'JOB-101' ? 4 : (j.id === 'JOB-106' ? 4 : (j.id === 'JOB-103' ? 3 : (j.id === 'JOB-105' ? 3 : (j.id === 'JOB-108' ? 3 : (j.id === 'JOB-102' ? 2 : (j.id === 'JOB-104' ? 2 : (j.id === 'JOB-107' ? 2 : 1))))))))
-        }));
+        return parsed.map(j => {
+          const defaultMatch = DEFAULT_JOBS.find(dj => dj.id === j.id);
+          return {
+            ...j,
+            skills: (Array.isArray(j.skills) && j.skills.length > 0) ? j.skills : (defaultMatch ? defaultMatch.skills : []),
+            positions: Number(j.positions) || (defaultMatch ? defaultMatch.positions : 1)
+          };
+        });
       }
-      console.warn("Stored jobs are malformed; restoring default catalog.");
     } catch (e) {
       console.error("Error parsing stored jobs", e);
     }
